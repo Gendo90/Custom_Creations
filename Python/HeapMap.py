@@ -37,6 +37,13 @@ class HeapMap():
 
     def popMin(self):
         result = self.heap.pop(0)
+        #remove value from indices map if the minimum value is not -infinity
+        if(result!=-float('inf')):
+            if(len(self.indices[result])==1):
+                self.indices.pop(result)
+            else:
+                self.indices[result].pop(self.indices[result].index(0))
+
         if(not self.heap):
             return result
         #get the length of the heap
@@ -73,6 +80,7 @@ class HeapMap():
                 self.indices[parent][self.indices[parent].index(i-1)] = min_child_ind
                 self.heap[min_child_ind], self.heap[i-1] = self.heap[i-1], self.heap[min_child_ind]
             i=min_child_ind+1
+        return result
 
     #works in log(n) time due to map keeping track of value indices
     def remove(self, elem):
