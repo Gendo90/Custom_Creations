@@ -8,11 +8,13 @@ import sys
 import time
 
 def isPrime(n):
-    """A prime checker function - determines if n is prime"""
+    """A prime checker function - determines if n is prime in O(n) time"""
 
-    #special case
+    #special cases
     if(n==2):
         return True
+    if(n<2):
+        return False
 
     for i in range(2, n//2+1):
         if(n%i==0):
@@ -20,6 +22,30 @@ def isPrime(n):
 
     return True
 
+def isPrimeUpgraded(n):
+    """A prime checker function - determines if n is prime faster O(sqrt(n))
+    time"""
+
+    #special cases
+    if(n==2):
+        return True
+    if(n<2):
+        return False
+
+    for i in range(2, int(math.sqrt(n))+2):
+        if(n%i==0):
+            return False
+
+    return True
+
+
+#stress test of isPrimeUpgraded
+# n = 0
+# while(isPrimeUpgraded(n)==isPrime(n)):
+#     print(isPrime(n), isPrimeUpgraded(n), n)
+#     n+=1
+# else:
+#     print("error on n=", n)
 
 def primesToNum(num):
     """Prime number generator function that gives primes up to and
@@ -31,9 +57,9 @@ def primesToNum(num):
         return primesList
 
     for i in range(2, num+1):
-        if(isPrime(i)):
+        if(isPrimeUpgraded(i)):
             primesList.append(i)
 
     return primesList
 
-# print(primesToNum(100))
+# print(len(primesToNum(1000000)))
