@@ -26,6 +26,10 @@ def isPrimeUpgraded(n):
     """A prime checker function - determines if n is prime faster O(sqrt(n))
     time"""
 
+    #extension to work for non-integer values (which are never prime)
+    if(not isinstance(n, int)):
+        return False
+
     #special cases
     if(n==2):
         return True
@@ -52,10 +56,6 @@ def primesToNum(num):
     """Prime number generator function that gives primes up to and
     including the number num"""
     primesList = []
-
-    #extension to work for non-integer values (which are never prime)
-    if(not isinstance(n, int)):
-        return False
 
     #special case
     if(num<2):
