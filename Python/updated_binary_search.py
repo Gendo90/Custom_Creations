@@ -2,6 +2,7 @@
 import sys
 import random
 
+#modified to return index of element if found and -1 if element not present
 def binary_search_recursive(a, x, left, right):
 
     index = (left+right)//2
@@ -20,6 +21,30 @@ def binary_search_recursive(a, x, left, right):
     elif a[index]>x:
         right = index
         return binary_search_recursive(a, x, left, right)
+
+
+#modified to return index where the item would be instead of -1 if not found
+def binary_search_recursive_with_index(a, x, left, right):
+    # print(left, right)
+    index = (left+right)//2
+    if a[index]==x:
+        return index
+    elif x>(a[right]) or x<a[left]: # first case where x is not in the list!
+        if(x>a[right]):
+            return right+1
+        else:
+            return left
+    elif left==right: # case where search is complete and no value x not found
+        return left
+    elif left==right-1: # case where there are only two numbers left, check both!
+        left = right
+        return binary_search_recursive_with_index(a, x, left, right)
+    elif a[index]<x:
+        left = index
+        return binary_search_recursive_with_index(a, x, left, right)
+    elif a[index]>x:
+        right = index
+        return binary_search_recursive_with_index(a, x, left, right)
 
 
 def binary_search(input_array, value):
@@ -48,12 +73,18 @@ def binary_search(input_array, value):
 
     return -1
 
-
+#now modified to return index of where value would be if not found
 def linear_search(a, x):
+    # print(a)
+    if(x>a[-1]):
+        return len(a)
+    if(a[0]>x):
+        return 0
     for i in range(len(a)):
         if a[i] == x:
             return i
-    return -1
+        elif a[i]>x:
+            return i
 
 def stress_test(n, m):
     test_cond = True
@@ -63,16 +94,18 @@ def stress_test(n, m):
             a.append(random.randint(0, 10**9))
         a.sort()
         for i in range(m):
-            b = random.randint(0, n-1)
-            print([linear_search(a, a[b]), binary_search_recursive(a, a[b], 0, len(a)-1)])
-            if(linear_search(a, a[b]) != binary_search_recursive(a, a[b], 0, len(a)-1)):
+            b = random.randint(-10, 10**12)
+            # print(b)
+            # print([linear_search(a, b), binary_search_recursive_with_index(a, b, 0, len(a)-1)])
+            if(linear_search(a, b) != binary_search_recursive_with_index(a, b, 0, len(a)-1)):
                 test_cond = False
                 print('broke here!')
+                print(b)
                 break
 
 
 
-#stress_test(100, 100000)
+# stress_test(100, 100000)
 
 
 
