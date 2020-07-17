@@ -7,7 +7,7 @@ const https = require('https');
 //actually a step farther than the original fetch function, but it can easily
 //be modified to accomodate non-JSON responses
 //Rejects the promise on any errors!
-function fetch_equivalent(url) {
+async function fetch_equivalent(url) {
     return new Promise((resolve, reject) =>
         (https.get(url,(res) => {
             let body = "";
