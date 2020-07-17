@@ -30,5 +30,5 @@ async function fetch_equivalent(url) {
             console.error(error.message);
             reject(error)
         });
-    );
+    ));
 }
