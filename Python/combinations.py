@@ -12,8 +12,6 @@ import sys
 # in lexicographic order
 def solve(s):
     # sort s so alphabetically in order as index increases
-
-    # Write your code here
     combinations = set('')
 
     combinations = find_comb_improved(s, combinations).copy()
@@ -38,3 +36,19 @@ def find_comb_improved(s, seen=set('')):
         seen = result_set.copy()
 
     return seen
+
+
+# gives the full range of combination values as a list
+# for a given n (so nC0, nC1, ..., nCn)
+def nCr_table(n):
+    output = []
+
+    for i in range(n+1):
+        if(i == 0):
+            curr_val = 1
+        else:
+            curr_val = (curr_val) * (n - i + 1) // (i)
+
+        output.append(curr_val)
+
+    return output
