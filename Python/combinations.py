@@ -40,6 +40,7 @@ def find_comb_improved(s, seen=set('')):
 
 # gives the full range of combination values as a list
 # for a given n (so nC0, nC1, ..., nCn)
+# gives the result in O(n) time, with O(n) space
 def nCr_table(n):
     output = []
 
