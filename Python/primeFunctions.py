@@ -63,13 +63,13 @@ def primesToNum(num):
         return primesList
 
     for i in range(2, num+1):
-        print(i)
+        # print(i)
         if(isPrimeUpgraded(i)):
             primesList.append(i)
 
     return primesList
 
-# print(len(primesToNum(1000000)))
+print(len(primesToNum(32000)))
 
 # creates a list of all primes up to a specified number
 # uses memoization and recursion
@@ -135,12 +135,14 @@ def getAllPrimesBelowNumUpgraded(num, primesList=[]):
 
         curr_num += 1
 
-    # print("Time elapsed: {}".format(time.clock()))
-    # print(len(primesList))
+    print("Time elapsed: {}".format(time.clock()))
+    print(len(primesList))
 
     return primesList
 
 # getAllPrimesBelowNumUpgraded(int(math.sqrt(10**9) + 2))
+# getAllPrimesBelowNumUpgraded(int(math.sqrt(2147483647) + 2))
+# getAllPrimesBelowNumUpgraded(10**6)
 
 
 # to get prime factors for a number n
@@ -157,6 +159,13 @@ def primeFactors(num, primesList=[]):
     factors = defaultdict(int)
     ind = 0
     while(num > 1):
+        # update primeList if the existing primeList does not include a high enough prime - to be added later
+        # right now, just check if the number is prime
+        if(ind >= len(primesList)-1):
+            if(isPrimeUpgraded(num)):
+                factors[int(num)] += 1
+                break
+
         curr_prime = primesList[ind]
         # divide out the current prime until it is no longer present,
         # counting the number of times factored out
@@ -169,3 +178,33 @@ def primeFactors(num, primesList=[]):
     return factors
 # print(primeFactors(63982))
 # print(primeFactors(10000000))
+
+# print(isPrimeUpgraded(65837))
+
+
+# use sieve of erastothenes algorithm to find primes in a given range, n to m inclusive
+# - https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes#Algorithmic_complexity
+# much quicker than trial division due to every number multiple being used and no "misses" when dividing primes
+# with a memoized primeList that must be calculated up to the ceil(sqrt(m))
+# e.g. primesList = primesToNum(int(math.sqrt(m) + 2))
+def erastosthenesSieve(n, m, primeList):
+    arr = [a for a in range(n, m+1) if (a % 2 == 1 and not a == 1)]
+    range_primes = set(arr)
+
+    # print(primesList)
+
+    for prime in primesList:
+        if(prime == 2):
+            continue
+        lower_bound = n // prime
+        upper_bound = m // prime
+        for removal in range(lower_bound, upper_bound+1):
+            # case where it is the prime itself
+            if (removal == 1):
+                continue
+            range_primes.discard(removal*prime)
+
+    output = list(range_primes)
+    output.sort()
+
+    return output
