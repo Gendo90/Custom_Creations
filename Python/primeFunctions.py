@@ -208,3 +208,18 @@ def erastosthenesSieve(n, m, primeList):
     output.sort()
 
     return output
+
+# erastosthenes sieve with prime factor set for each non-prime number, stored in a map
+# starting from 2 upward to n
+def erastothenesSieveFactors(n):
+    primes_set = set()
+    seen = set()
+    prime_factor_map = defaultdict(list)
+
+    for i in range(2, n+1):
+        if(i not in seen):
+            primes_set.add(i)
+            for j in range(i, n+1, i):
+                prime_factor_map[j].append(i)
+                seen.add(j)
+    return primes_set, prime_factor_map
