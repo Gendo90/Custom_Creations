@@ -223,3 +223,21 @@ def erastothenesSieveFactors(n):
                 prime_factor_map[j].append(i)
                 seen.add(j)
     return primes_set, prime_factor_map
+
+
+# prime factors as a defaultdict of primes to count of those primes
+def erastothenesSieveFactorsCount(n):
+    primes_set = set()
+    seen = set()
+    prime_factor_map = defaultdict(lambda: defaultdict(int))
+
+    for i in range(2, n+1):
+        if(i not in seen):
+            primes_set.add(i)
+            for j in range(i, n+1, i):
+                j2 = j
+                while(j2 % i == 0):
+                    prime_factor_map[j][i] += 1
+                    j2 /= i
+                seen.add(j)
+    return primes_set, prime_factor_map
