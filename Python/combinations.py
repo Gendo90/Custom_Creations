@@ -38,6 +38,27 @@ def find_comb_improved(s, seen=set('')):
     return seen
 
 
+# finds all combinations possible
+# by splitting a number (or string) into composite numbers (groupings of adjacent digits/letters)
+# e.g. "123" -> [['1', '2', '3'], ['1', '23'], ['12', '3'], ['123']]
+# need to pass in an empty arr variable ([]) or this will not work right (fix later! probably something with arr scope)
+def split_comb(s, arr=[]):
+    if(len(s) == 0):
+        return [""]
+
+    s_arr = [a for a in s]
+
+    new_result = []
+    for i in range(1, len(s)+1):
+        curr_char = s_arr[:i]
+        curr_chars = "".join(curr_char)
+        appendations = split_comb("".join(s_arr[i:]), [])
+        for ending in appendations:
+            curr_mix = [curr_chars] + [*ending]
+            new_result.append(curr_mix)
+    arr += new_result
+    return arr
+
 # gives the full range of combination values as a list
 # for a given n (so nC0, nC1, ..., nCn)
 # gives the result in O(n) time, with O(n) space
