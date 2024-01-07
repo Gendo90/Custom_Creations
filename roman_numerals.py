@@ -67,7 +67,7 @@ def minimizedRomanNumeral(n):
     if(n_ones < 4):
         result += "I" * n_ones
     elif(n_ones == 4):
-        result += "IX"
+        result += "IV"
     elif(n_ones < 9):
         result += "V" + ("I" * (n_ones - 5))
     else:
