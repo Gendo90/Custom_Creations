@@ -1,3 +1,5 @@
+import math
+
 # gives all palindromes below a given power of 10 (num_digits parameter)
 # output is a sorted list of palindromes
 def getPalindromesBelow(num_digits):
@@ -34,3 +36,27 @@ def getSeries(num_sides, num_results):
     result_series = [a * ((num_sides - 2) * a + (1 - (num_sides - 3))) // 2 for a in range(1, num_results + 1)]
 
     return result_series
+
+
+# use Extended Euclidean Algorithm: https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
+# keep track of quotients for each value compared and not just remainders!
+# gives the mod multiplicative inverse
+def mod_mult_inv(a, m):
+    # coprime condition for mod inverse to exist
+    if (not math.gcd(a, m) == 1):
+        return -1
+
+    # reduce a if larger to m to its congruence below m
+    a = a % m
+
+    steps = [[m, 1, 0], [a, 0, 1]]
+
+    while (not steps[-1][0] == 1):
+        # g > h as a rule
+        g, h = steps[-2][0], steps[-1][0]
+        q, r = divmod(g, h)
+
+        steps.append([r, steps[-2][1] - q * steps[-1][1],
+                     steps[-2][2] - q * steps[-1][2]])
+
+    return steps[-1][-1] % m
