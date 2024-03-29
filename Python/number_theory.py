@@ -60,3 +60,28 @@ def mod_mult_inv(a, m):
                      steps[-2][2] - q * steps[-1][2]])
 
     return steps[-1][-1] % m
+
+
+# returns (a**b) % m quickly!
+# use exponentiation shortcut from lecture/number theory notes
+def fast_exp(a: int, b: int, m: int) -> int:
+    if (a == 0):
+        return 0
+
+    # convert to binary string, reversed for easier iteration
+    rev_bin_b = bin(b)[2:][::-1]
+
+    # calc array of values for a ** (2**k) % m for quick exponentiation
+    # start with 2**0 = 1 so a**1 => a
+    arr = [a]
+    for i in range(len(rev_bin_b) - 1):
+        last_val = arr[-1]
+        arr.append((last_val**2) % m)
+
+    result = 1
+    for i, val in enumerate(rev_bin_b):
+        if (val == "1"):
+            result *= arr[i]
+            result %= m
+
+    return result
